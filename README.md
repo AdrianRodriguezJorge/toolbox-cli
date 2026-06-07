@@ -5,9 +5,9 @@
 [![Offline Ready](https://img.shields.io/badge/Offline-100%25-green.svg)](#)
 [![Platform](https://img.shields.io/badge/Platform-Windows%20%7C%20Linux%20%7C%20macOS-lightgrey.svg)](#)
 
-**Toolbox CLI** is a powerful file conversion and compression toolbox written in Python. It is designed to automate the conversion and optimization of documents, spreadsheets, images, and videos locally, quickly, and privately.
+**Toolbox CLI** is a powerful file conversion and compression toolbox written in Python. It is designed to automate the conversion and optimization of documents, spreadsheets, images, and videos locally on your machine.
 
-Unlike traditional online web converters, **Toolbox CLI** processes all files locally on your machine. No data is ever uploaded to external servers, guaranteeing absolute confidentiality for your sensitive information.
+Unlike traditional online web converters, **Toolbox CLI** processes all files locally on your machine. No data is ever uploaded to external servers, guaranteeing absolute confidentiality for your files and sensitive information.
 
 ---
 
@@ -39,7 +39,6 @@ Open a **NEW** terminal window (CMD or PowerShell) in any folder containing file
 tb
 ```
 
-
 ---
 
 ## 📂 Repository Directory Structure
@@ -49,7 +48,7 @@ Here is a quick overview of the files in the repository:
 ```text
 toolbox-cli/
 ├── toolbox_cli/            # Main package containing all source code and helper scripts
-│   ├── base.py             # Console rendering tools, file utility helpers, and BaseConverter
+│   ├─�� base.py             # Console rendering tools, file utility helpers, and BaseConverter
 │   ├── config.py           # Language config file manager (JSON local storage)
 │   ├── diagnostics.py      # Real-time checks for FFmpeg, MS Office COM, and Python packages
 │   ├── i18n.py             # Dual-language translations (English & Spanish)
@@ -68,10 +67,10 @@ toolbox-cli/
 ## ✨ Key Features
 
 * **🖥️ Interactive Console Interface**: A premium, responsive visual CLI menu built using the `rich` library.
-* **📊 Live System Diagnostics**: Upon startup, a dynamic dashboard scans and reports the availability of external dependencies (such as FFmpeg and Microsoft Office COM) to let you know which tools are available.
-* **🔒 Microsoft Office COM Isolation**: Word (`.docx`) and PowerPoint (`.pptx`) conversions run in an isolated background COM layer. You can convert files without interfering with or closing other active Office documents you are currently working on.
+* **📊 Live System Diagnostics**: Upon startup, a dynamic dashboard scans and reports the availability of external dependencies (such as FFmpeg and Microsoft Office COM) to let you know which tools are ready to use.
+* **🔒 Microsoft Office COM Isolation**: Word (`.docx`) and PowerPoint (`.pptx`) conversions run in an isolated background COM layer. You can convert files without interfering with or closing other Office applications.
 * **🛡️ Lockfile & Temp File Protection**: Automatically ignores OS and Office temporary/lock files (e.g., files starting with `~$`, `._`, `.tmp`, or `.~lock.`), preventing read errors.
-* **📂 Smart Collision Resolution**: Output files will never overwrite existing files. If a filename collision is detected, the script automatically appends an incremental numeric suffix (e.g., `document_1.pdf`).
+* **📂 Smart Collision Resolution**: Output files will never overwrite existing files. If a filename collision is detected, the script automatically appends an incremental numeric suffix (e.g., `file_1.pdf`, `file_2.pdf`).
 * **🌐 Offline by Design**: Requires no internet connection to run, making it ideal for highly secure corporate environments and air-gapped systems.
 
 ---
@@ -104,6 +103,85 @@ To leverage the full capability of all tools:
 
 ---
 
+## 📖 Usage Examples
+
+After installation, you can use **Toolbox CLI** in the following ways:
+
+### Basic Usage
+Open your terminal in a folder with files and type:
+```cmd
+tb
+```
+
+This will launch the interactive menu where you can:
+1. Select which conversion tool to use
+2. Choose your input file(s)
+3. Configure output options
+4. Execute the conversion
+
+### Batch Conversions
+Convert multiple files at once by selecting them through the interactive interface. The tool will process all selected files sequentially.
+
+### Language Selection
+On first run, you'll be prompted to choose between English or Spanish. This preference is saved locally and can be changed anytime through the application settings.
+
+---
+
+## 🔧 Troubleshooting
+
+### Issue: `tb` command not recognized
+**Solution**: 
+- Ensure you opened a **NEW** terminal window after installation
+- Verify `install.bat` completed successfully
+- Check that the installation folder is in your PATH: `echo %PATH%`
+
+### Issue: Microsoft Office features not working
+**Solution**:
+- Ensure Microsoft Word or PowerPoint is installed locally on Windows
+- Check the diagnostics dashboard when launching `tb` (it shows MS Office availability)
+- Ensure no Office applications are currently using the file
+
+### Issue: Video compression not working
+**Solution**:
+- Download and install FFmpeg from [ffmpeg.org](https://ffmpeg.org/)
+- Add FFmpeg to your system PATH
+- Restart the terminal after installation
+- Verify with: `ffmpeg -version`
+
+### Issue: File conversion fails with permission error
+**Solution**:
+- Check that you have write permissions in the current directory
+- Ensure files are not locked by another application
+- The tool automatically skips temporary/lock files (those starting with `~$`, `._`, `.tmp`, or `.~lock.`)
+
+---
+
 ## 📝 License
 
 This project is licensed under the MIT License. See the `LICENSE` file for details.
+
+---
+
+## 🤝 Contributing
+
+Contributions are welcome! If you'd like to:
+- Report bugs or issues
+- Suggest new features
+- Improve documentation
+- Add new conversion tools
+
+Please feel free to open an issue or submit a pull request. For major changes, please discuss them in an issue first.
+
+---
+
+## 💡 Tips & Best Practices
+
+- **Batch Processing**: The tool supports converting multiple files at once, which is more efficient than processing them individually.
+- **Disk Space**: For video compression, ensure you have enough disk space for temporary processing files.
+- **Original Files**: The tool never modifies your original files. All conversions are saved as new files.
+- **Performance**: For large files (especially videos), the conversion may take some time. This varies depending on your hardware.
+- **Offline Security**: No internet connection needed means your sensitive documents, spreadsheets, and media never leave your computer.
+
+---
+
+**Made with ❤️ by Adrian Rodriguez Jorge**
