@@ -48,7 +48,7 @@ Here is a quick overview of the files in the repository:
 ```text
 toolbox-cli/
 ├── toolbox_cli/            # Main package containing all source code and helper scripts
-│   ├─�� base.py             # Console rendering tools, file utility helpers, and BaseConverter
+│   ├── base.py             # Console rendering tools, file utility helpers, and BaseConverter
 │   ├── config.py           # Language config file manager (JSON local storage)
 │   ├── diagnostics.py      # Real-time checks for FFmpeg, MS Office COM, and Python packages
 │   ├── i18n.py             # Dual-language translations (English & Spanish)
@@ -57,6 +57,7 @@ toolbox-cli/
 │   ├── tools.py            # Implementation of the 13 converter strategies
 │   └── toolbox.py          # Main CLI console runner interface
 ├── install.bat             # Double-click script to install dependencies and register PATH
+├── uninstall.bat           # Double-click script to remove from PATH and clean up
 ├── tb.cmd                  # Global CMD/PowerShell launcher alias (command 'tb')
 ├── LICENSE                 # Open-source MIT License terms
 └── README.md               # User guide and documentation (this file)
@@ -127,6 +128,47 @@ On first run, you'll be prompted to choose between English or Spanish. This pref
 
 ---
 
+## 🗑️ Uninstallation
+
+### Automatic Uninstallation (Recommended)
+Simply run the uninstaller script from your installation directory:
+```cmd
+uninstall.bat
+```
+
+This will automatically:
+- Remove the installation folder from your system `PATH`
+- Clean up configuration files from `%APPDATA%\toolbox-cli`
+- Update your environment variables
+
+**After uninstalling:**
+- Close all terminal windows
+- Open a **NEW** terminal window
+- Verify the removal with: `tb` (should show "command not recognized")
+
+### Manual Uninstallation
+If you prefer to uninstall manually:
+
+1. **Remove from PATH**:
+   - Press `Win + X` and select "System"
+   - Click "Advanced system settings" → "Environment Variables"
+   - Under "User variables", select `PATH` and click "Edit"
+   - Find and remove the Toolbox CLI installation folder path
+   - Click "OK" to save changes
+
+2. **Delete Installation Files**:
+   - Simply delete the `toolbox-cli` folder from your system
+
+3. **Clean up Configuration** (Optional):
+   - Configuration files are stored in: `%APPDATA%\toolbox-cli`
+   - Delete this folder if you want to remove all saved settings and preferences
+
+4. **Restart Terminal**:
+   - Close all terminal windows
+   - Open a new terminal to verify the uninstallation
+
+---
+
 ## 🔧 Troubleshooting
 
 ### Issue: `tb` command not recognized
@@ -153,6 +195,12 @@ On first run, you'll be prompted to choose between English or Spanish. This pref
 - Check that you have write permissions in the current directory
 - Ensure files are not locked by another application
 - The tool automatically skips temporary/lock files (those starting with `~$`, `._`, `.tmp`, or `.~lock.`)
+
+### Issue: Uninstall script fails to remove PATH
+**Solution**:
+- Run the uninstall script as Administrator
+- Check if the PATH variable contains the installation directory (manually review in Environment Variables)
+- If issues persist, use the Manual Uninstallation method
 
 ---
 
