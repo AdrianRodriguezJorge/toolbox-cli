@@ -7,30 +7,54 @@ import subprocess
 # Config path
 CONFIG_FILE = os.path.expanduser("~/.toolbox_cli.json")
 
+# Separator and formatting constants
+SEPARATOR_MAIN = "=" * 70
+SEPARATOR_SUB = "=" * 66
+
 # Localized messages (re-using installer style)
 _MSGS = {
     "en": {
+        "title": "TOOLBOX CLI - UNINSTALLATION",
+        "intro_msg": "This script will remove Toolbox CLI from your system.",
+        "install_dir": "Installation directory:",
         "confirm": "Are you sure you want to uninstall Toolbox CLI? (Y/N): ",
         "cancelled": "Uninstallation cancelled.",
-        "removing_path": "Removing Toolbox CLI from PATH...",
-        "path_updated": "PATH variable updated successfully.",
-        "path_not_found": "Installation folder not found in PATH.",
-        "cleaning": "Cleaning up configuration files...",
-        "config_removed": "Configuration removed:",
-        "config_not_found": "No configuration files found.",
-        "complete": "Uninstallation complete.",
+        "step_removing_path": "Step 1: Removing from system PATH",
+        "removing_path": "  Removing Toolbox CLI from PATH...",
+        "path_updated": "  ✓ PATH variable updated successfully.",
+        "path_not_found": "  ✗ Installation folder not found in PATH.",
+        "step_cleaning": "Step 2: Cleaning up configuration files",
+        "cleaning": "  Cleaning up configuration files...",
+        "config_removed": "  ✓ Configuration removed:",
+        "config_not_found": "  ✗ No configuration files found.",
+        "complete_title": "UNINSTALLATION COMPLETE!",
+        "complete": "✓ Toolbox CLI has been removed from your system.",
+        "post_steps": "To finish the process:",
+        "step1": "  1. Close all terminal windows",
+        "step2": "  2. Open a NEW terminal window",
+        "step3": "  3. Verify with: tb (should show 'command not recognized')",
         "error": "An error occurred during uninstallation.",
     },
     "es": {
+        "title": "TOOLBOX CLI - DESINSTALACIÓN",
+        "intro_msg": "Este script eliminará Toolbox CLI de tu sistema.",
+        "install_dir": "Directorio de instalación:",
         "confirm": "¿Estás seguro de que deseas desinstalar Toolbox CLI? (S/N): ",
         "cancelled": "Desinstalacion cancelada.",
-        "removing_path": "Eliminando Toolbox CLI del PATH...",
-        "path_updated": "Variable PATH actualizada correctamente.",
-        "path_not_found": "Carpeta de instalacion no encontrada en PATH.",
-        "cleaning": "Limpiando archivos de configuracion...",
-        "config_removed": "Configuracion eliminada:",
-        "config_not_found": "No se encontraron archivos de configuracion.",
-        "complete": "Desinstalacion completada.",
+        "step_removing_path": "Paso 1: Eliminando del PATH del sistema",
+        "removing_path": "  Eliminando Toolbox CLI del PATH...",
+        "path_updated": "  ✓ Variable PATH actualizada correctamente.",
+        "path_not_found": "  ✗ Carpeta de instalacion no encontrada en PATH.",
+        "step_cleaning": "Paso 2: Limpiando archivos de configuración",
+        "cleaning": "  Limpiando archivos de configuracion...",
+        "config_removed": "  ✓ Configuracion eliminada:",
+        "config_not_found": "  ✗ No se encontraron archivos de configuracion.",
+        "complete_title": "¡DESINSTALACIÓN COMPLETADA!",
+        "complete": "✓ Toolbox CLI ha sido eliminado de tu sistema.",
+        "post_steps": "Para finalizar el proceso:",
+        "step1": "  1. Cierra todas las ventanas de terminal",
+        "step2": "  2. Abre una NUEVA ventana de terminal",
+        "step3": "  3. Verifica con: tb (debería mostrar 'comando no reconocido')",
         "error": "Ocurrio un error durante la desinstalacion.",
     }
 }
@@ -103,29 +127,82 @@ def main():
     # Determine install directory (parent of the package folder)
     script_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+    # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    # DISPLAY HEADER
+    # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    print()
+    print(SEPARATOR_MAIN)
+    center_text = msg("title", lang)
+    padding = (len(SEPARATOR_MAIN) - len(center_text)) // 2
+    print(" " * padding + center_text)
+    print(SEPARATOR_MAIN)
+    print()
+
+    # Display introduction and installation directory
+    print(msg("intro_msg", lang))
+    print()
+    print(f"{msg('install_dir', lang)}")
+    print(f"  {script_dir}")
+    print()
+
+    # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    # CONFIRMATION
+    # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
     try:
         choice = input(msg("confirm", lang)).strip()
     except (KeyboardInterrupt, EOFError):
+        print()
         print(msg("cancelled", lang))
         sys.exit(0)
 
     if lang == "es":
         if choice.upper() != "S":
+            print()
             print(msg("cancelled", lang))
             sys.exit(0)
     else:
         if choice.upper() != "Y":
+            print()
             print(msg("cancelled", lang))
             sys.exit(0)
 
     print()
+
+    # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    # STEP 1: REMOVE FROM PATH
+    # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    print(msg("step_removing_path", lang))
+    print("-" * 66)
     print(msg("removing_path", lang))
     remove_path(script_dir, lang)
     print()
+
+    # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    # STEP 2: CLEAN UP CONFIGURATION
+    # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    print(msg("step_cleaning", lang))
+    print("-" * 66)
     print(msg("cleaning", lang))
     remove_configs(lang)
     print()
+
+    # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    # COMPLETION MESSAGE
+    # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    print(SEPARATOR_MAIN)
+    center_text = msg("complete_title", lang)
+    padding = (len(SEPARATOR_MAIN) - len(center_text)) // 2
+    print(" " * padding + center_text)
+    print(SEPARATOR_MAIN)
+    print()
     print(msg("complete", lang))
+    print()
+    print(msg("post_steps", lang))
+    print(msg("step1", lang))
+    print(msg("step2", lang))
+    print(msg("step3", lang))
+    print()
+    print("=" * 70)
 
 
 if __name__ == "__main__":
