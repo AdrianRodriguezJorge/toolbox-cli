@@ -1,0 +1,12 @@
+# Dependencias requeridas para la Caja de Herramientas de Conversión
+rich>=13.0.0
+Pillow>=10.0.0
+pymupdf>=1.22.0
+python-docx>=0.8.11
+python-pptx>=0.6.21
+pandas>=2.0.0
+openpyxl>=3.1.0
+markdown>=3.4.0
+
+# PyWin32 es requerido únicamente en Windows para interactuar con Microsoft Office COM
+pywin32>=306; sys_platform == 'win32'
