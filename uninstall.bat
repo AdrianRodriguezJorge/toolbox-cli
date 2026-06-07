@@ -1,4 +1,7 @@
-@echo off
+﻿@echo off
+title Toolbox CLI - Uninstallation Script
+cls
+
 REM Toolbox CLI - Uninstallation Script
 REM This script removes Toolbox CLI from your system PATH and cleans up configuration files.
 REM It respects the language preference set during installation.
@@ -11,12 +14,10 @@ set "CONFIG_FILE=%USERPROFILE%\.toolbox_cli.json"
 REM Default language is English
 set "LANG=en"
 
-REM Try to read language from config file
+REM Try to read language from config file using PowerShell JSON parsing
 if exist "%CONFIG_FILE%" (
-    for /f "tokens=*" %%A in ('findstr "language" "%CONFIG_FILE%"') do (
-        if "%%A"=="    \"language\": \"es\"," (
-            set "LANG=es"
-        )
+    for /f "tokens=*" %%A in ('powershell -Command "(Get-Content '%CONFIG_FILE%' | ConvertFrom-Json).language" 2^>nul') do (
+        set "LANG=%%A"
     )
 )
 
@@ -36,7 +37,7 @@ if "%LANG%"=="en" (
     set "CONFIG_NOT_FOUND=No configuration files found."
     set "COMPLETE_TITLE=Uninstallation Complete!"
     set "COMPLETE_MSG=Toolbox CLI has been removed from your system."
-    set "COMPLETE_STEPS=To complete the process, please:
+    set "COMPLETE_STEPS=To complete the process, please:"
     set "STEP1=  1. Close all terminal windows"
     set "STEP2=  2. Open a NEW terminal window"
     set "STEP3=  3. Verify with: tb (should show 'command not recognized')"
@@ -68,7 +69,6 @@ REM ============================================================
 REM EXECUTION
 REM ============================================================
 
-cls
 echo.
 echo ======================================================
 echo     %TITLE%
