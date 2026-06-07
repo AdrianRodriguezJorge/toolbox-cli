@@ -104,25 +104,6 @@ To leverage the full capability of all tools:
 
 ---
 
-## 💻 Automation & Pipeline Integration
-
-If you want to use **Toolbox CLI** in other scripts, automation flows, or task schedulers without user prompt interactions, you can enable non-interactive mode by setting the environment variable `TOOLBOX_AUTO_ALL=1`:
-
-* **Windows (CMD)**:
-  ```cmd
-  set TOOLBOX_AUTO_ALL=1 && tb
-  ```
-* **Windows (PowerShell)**:
-  ```powershell
-  $env:TOOLBOX_AUTO_ALL="1"; tb
-  ```
-* **Linux / macOS**:
-  ```bash
-  TOOLBOX_AUTO_ALL=1 tb
-  ```
-
----
-
 ## 📝 License
 
 This project is licensed under the MIT License. See the `LICENSE` file for details.

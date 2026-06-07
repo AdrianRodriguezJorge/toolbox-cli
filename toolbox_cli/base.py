@@ -98,9 +98,8 @@ def select_files_to_convert(files, tool_name=""):
     """
     if not files:
         return []
-        
-    # Auto-all bypass for testing or background automation
-    if not sys.stdin.isatty() or os.environ.get("TOOLBOX_AUTO_ALL") == "1":
+    # If running in a non-interactive environment, convert all by default
+    if not sys.stdin.isatty():
         return files
 
     clear_screen()
