@@ -18,7 +18,7 @@ Follow these steps to install **Toolbox CLI** globally on your system:
 ### 1. Clone the Repository
 Open a terminal and clone the repository into your preferred tools directory (e.g., `C:\Program Files\toolbox-cli` or a custom tools folder in your user path):
 ```bash
-git clone https://github.com/YOUR_USERNAME/toolbox-cli.git
+git clone https://github.com/AdrianRodriguezJorge/toolbox-cli.git
 ```
 
 ### 2. Run the Installer
