@@ -49,6 +49,7 @@ _TRANSLATIONS = {
         "t_vid_comp": "Compress Video (FFmpeg)",
         "t_docx_to_pdf": "Word to PDF",
         "t_pdf_to_docx": "PDF to Word",
+        "t_pdf_to_img_folder": "PDF to Image Folder (HQ)",
         
         # Error & status messages
         "err_no_files": "No matching files found for this tool in the current directory.",
@@ -57,6 +58,8 @@ _TRANSLATIONS = {
         "err_general": "Error processing {file}: {e}",
         "status_converting": "Converting: {input} -> {output}...",
         "status_converted": "Converted successfully: {output}",
+        "status_extracting_pages": "Extracting high-quality pages from PDF '{input}' into folder '{output}'...",
+        "status_extracted_pages": "Successfully extracted {count} images to: {output}",
         "status_com_start": "Starting Microsoft Office COM application in background...",
         
         # Image specific
@@ -117,6 +120,7 @@ _TRANSLATIONS = {
         "t_vid_comp": "Comprimir Video (FFmpeg)",
         "t_docx_to_pdf": "Word a PDF",
         "t_pdf_to_docx": "PDF a Word",
+        "t_pdf_to_img_folder": "PDF a Carpeta de Imágenes (Alta Calidad)",
         
         # Mensajes de error y estado
         "err_no_files": "No se encontraron archivos compatibles para esta herramienta en el directorio actual.",
@@ -125,6 +129,8 @@ _TRANSLATIONS = {
         "err_general": "Error al procesar {file}: {e}",
         "status_converting": "Convirtiendo: {input} -> {output}...",
         "status_converted": "Convertido exitosamente: {output}",
+        "status_extracting_pages": "Extrayendo páginas en alta calidad del PDF '{input}' en la carpeta '{output}'...",
+        "status_extracted_pages": "Se extrajeron con éxito {count} imágenes en: {output}",
         "status_com_start": "Iniciando aplicación Microsoft Office COM en segundo plano...",
         
         # Específico de Imágenes

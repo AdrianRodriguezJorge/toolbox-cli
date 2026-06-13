@@ -1256,6 +1256,79 @@ class PdfToWordConverter(BaseConverter):
 
 
 # ==========================================
+# 14. PDF to High-Quality Image Folder
+# ==========================================
+class PdfToImageFolderConverter(BaseConverter):
+    @property
+    def id(self) -> int:
+        return 14
+
+    @property
+    def name(self) -> str:
+        return get_text("t_pdf_to_img_folder")
+
+    @property
+    def input_extensions(self) -> list:
+        return [".pdf"]
+
+    @property
+    def output_extension_desc(self) -> str:
+        return "PNG Folder (HQ)"
+
+    def convert(self, files: list) -> tuple:
+        selected_files = select_files_to_convert(files, self.name)
+        if not selected_files:
+            return 0, 0
+
+        try:
+            import fitz  # PyMuPDF
+        except ImportError:
+            print_error("PyMuPDF (fitz) library is missing. Run install.bat first.")
+            return 0, len(selected_files)
+
+        success_count = 0
+        fail_count = 0
+
+        for filename in selected_files:
+            try:
+                pdf_basename = os.path.basename(filename)
+                pdf_name, _ = os.path.splitext(pdf_basename)
+                
+                # Create directory named after the PDF in current working directory
+                output_dir = os.path.join(os.getcwd(), pdf_name)
+                os.makedirs(output_dir, exist_ok=True)
+                
+                print_info(get_text("status_extracting_pages", input=pdf_basename, output=pdf_name))
+                
+                doc = fitz.open(filename)
+                total_pages = len(doc)
+                
+                # Determine padding size based on page count (e.g. 01 for <100 pages, 001 for >=100 pages)
+                padding = 2 if total_pages < 100 else len(str(total_pages))
+                
+                for page_num in range(total_pages):
+                    page = doc.load_page(page_num)
+                    # Use a very high resolution zoom matrix (400 DPI) for maximum quality
+                    zoom = 400 / 72
+                    matrix = fitz.Matrix(zoom, zoom)
+                    pix = page.get_pixmap(matrix=matrix)
+                    
+                    page_filename = f"page_{page_num + 1:0{padding}d}.png"
+                    output_path = os.path.join(output_dir, page_filename)
+                    
+                    pix.save(output_path)
+                
+                doc.close()
+                print_success(get_text("status_extracted_pages", count=total_pages, output=os.path.relpath(output_dir)))
+                success_count += 1
+            except Exception as e:
+                print_error(get_text("err_general", file=filename, e=e))
+                fail_count += 1
+
+        return success_count, fail_count
+
+
+# ==========================================
 # Strategy Registry
 # ==========================================
 CONVERTERS = [
@@ -1271,7 +1344,8 @@ CONVERTERS = [
     ImageToIcoConverter(),
     PdfToImageConverter(),
     ImageCompressionConverter(),
-    VideoCompressionConverter()
+    VideoCompressionConverter(),
+    PdfToImageFolderConverter()
 ]
 
 def get_converter_by_id(cid: int):
